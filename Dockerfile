@@ -16,7 +16,7 @@ RUN cd /tmp/postgresql-9.3.4/contrib/pg_trgm && \
   make && \
   make install
 RUN rm -r /tmp/postgresql-9.3.4
-RUN useradd --shell /bin/false postgres
+RUN useradd --shell /bin/false -d /var/home postgres
 RUN mkdir /var/lib/pgdata && chown -R postgres:postgres /var/lib/pgdata
 RUN su - postgres -s /bin/bash -c "/usr/local/pgsql/bin/initdb -D /var/lib/pgdata"
 RUN sed -i -e "s;^#log_destination\s*=\s*.*$;log_destination = 'syslog';" \
@@ -31,5 +31,7 @@ ADD monit   /etc/monit/conf.d/
 VOLUME ["/var/lib/pgdata"]
 
 EXPOSE 5432
+
+ADD profile /profile
 
 CMD ["/usr/bin/monit", "-I", "-c", "/etc/monit/monitrc"]
