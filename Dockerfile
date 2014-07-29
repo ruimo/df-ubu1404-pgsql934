@@ -24,7 +24,7 @@ RUN sed -i -e "s;^#log_destination\s*=\s*.*$;log_destination = 'syslog';" \
            -e "s;^#listen_address.*;listen_addresses = '0.0.0.0';" \
   /var/lib/pgdata/postgresql.conf
 RUN echo "host     all             all             172.16.0.0/12           trust" >> /var/lib/pgdata/pg_hba.conf
-
+RUN echo "host     all             all             192.168.0.0/16          trust" >> /var/lib/pgdata/pg_hba.conf
 ADD monit   /etc/monit/conf.d/
 
 # Define mountable directories.
