@@ -27,6 +27,10 @@ RUN echo "host     all             all             172.16.0.0/12           trust
 RUN echo "host     all             all             192.168.0.0/16          trust" >> /var/lib/pgdata/pg_hba.conf
 ADD monit   /etc/monit/conf.d/
 
+# Add Japan locale
+RUN locale-gen ja_JP.UTF-8
+RUN sudo /usr/sbin/update-locale LANG=ja_JP.UTF-8
+
 # Define mountable directories.
 VOLUME ["/var/lib/pgdata"]
 
